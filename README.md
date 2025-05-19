@@ -16,14 +16,14 @@ Ziel des Projekts ist es, einen autonomen Roboter zu bauen, der Objekte transpor
 ## Voraussetzungen
 
 - EV3 Brick mit installierter MicroPython-Firmware
-- Entwicklungsumgebung wie Visual Studio Code oder Thonny
+- Entwicklungsumgebung wie Visual Studio Code
 - USB- oder WLAN-Verbindung zum Roboter
 
 ## Autor:innen
 
-- [Dein Name hier einfügen]
+-Hertling Rafael
 
 ## Lizenz
 
-Dieses Projekt steht unter der [Lizenzname hier einfügen, z. B. MIT-Lizenz].
+Dieses Projekt steht unter der S-INA24bl Mathe Lizenz Gruppe.
 
