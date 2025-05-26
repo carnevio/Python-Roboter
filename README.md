@@ -29,7 +29,7 @@ Dieses Projekt steht unter der S-INA24bl Mathe Lizenz Gruppe.
 
 ## Aufgabenverteilung
 🔧 Aufteilung in 5 Teilfeatures
-🔹 1. Navigation zur Ablagestelle (Startposition → Objekt)
+🔹 1. Navigation zur Ablagestelle (Startposition → Objekt)(Rafael)
 Zuständig für: Grundnavigation mit Gyro/Encoder oder Linienfolge
 
 Aufgabe: Der Roboter fährt selbstständig zur definierten Ablagestelle, wo sich das Objekt befindet.
