@@ -56,7 +56,7 @@ Greifarm hoch
 
 Technik: Exakte Winkelsteuerung des Motors
 
-🔹 4. Navigation zur Zielzone (Objekt → Zielort)
+🔹 4. Navigation zur Zielzone (Objekt → Zielort) (Nevio)
 Zuständig für: Navigation mit Referenz (z.B. Bodenfarbe, bestimmte Strecke, Linie)
 
 Aufgabe: Der Roboter fährt zur Zielzone, wo das Objekt abgeliefert werden soll.
