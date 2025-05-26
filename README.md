@@ -36,14 +36,14 @@ Aufgabe: Der Roboter fährt selbstständig zur definierten Ablagestelle, wo sich
 
 Technik: Linienfolger oder einfache Geradeausfahrt mit Zeit/Encoder + Drehung
 
-🔹 2. Farberkennung am Objekt
+🔹 2. Farberkennung am Objekt (Lukas)
 Zuständig für: Farbsensor-Logik
 
 Aufgabe: Mit dem Farbsensor wird geprüft, ob das Objekt die gewünschte Farbe (z.B. Rot = „Paket“) hat.
 
 Technik: Wenn die Farbe stimmt, wird Signal gegeben → weiter zum Greifen; sonst evtl. Abbruch oder Suche nach anderem Objekt (optional)
 
-🔹 3. Greifmechanismus (Mittlerer Motor)
+🔹 3. Greifmechanismus (Mittlerer Motor)(Sven)
 Zuständig für: Objektaufnahme und -abgabe
 
 Aufgabe: Mittlerer Motor steuert Greifarm oder Hebegabel.
@@ -63,7 +63,7 @@ Aufgabe: Der Roboter fährt zur Zielzone, wo das Objekt abgeliefert werden soll.
 
 Technik: Linienfolger, Farberkennung der Zielzone oder koordinatenbasierte Navigation
 
-🔹 5. Objekt ablegen und zurückkehren
+🔹 5. Objekt ablegen und zurückkehren (Robin)
 Zuständig für: Abgabe durch Motorsteuerung + Rückfahrt
 
 Aufgabe:
