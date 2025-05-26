@@ -1,77 +1,23 @@
-#!/usr/bin/env pybricks-micropython
+from ev3dev2.sensor.lego import ColorSensor
+from ev3dev2.sensor import INPUT_1
  
-from pybricks.hubs import EV3Brick
-
-from pybricks.ev3devices import Motor
-
-from pybricks.parameters import Port, Stop
-
-from pybricks.robotics import DriveBase
+sensor = ColorSensor(INPUT_1)
  
-# Initialisierung
-
-ev3 = EV3Brick()
+farbe = sensor.color
  
-medium_motor = Motor(Port.A)  # Aktor
-
-left_motor   = Motor(Port.B)
-
-right_motor  = Motor(Port.C)
- 
-medium_motor.reset_angle(0)
-
-left_motor.reset_angle(0)
-
-right_motor.reset_angle(0)
- 
-# DriveBase einrichten
-
-wheel_diameter = 56  # mm
-
-axle_track = 114     # mm
-
-drive_base = DriveBase(left_motor, right_motor, wheel_diameter, axle_track)
- 
-# 1. 10 cm (100 mm) rückwärts
-
-drive_base.straight(-100)
- 
-# 2. 15° nach rechts drehen (im Uhrzeigersinn)
-
-drive_base.turn(20)
- 
-# 3. Aktor 15° nach rechts drehen
-
-medium_motor.run_target(
-
-    speed=200,
-
-    target_angle=-20,
-
-    then=Stop.HOLD,
-
-    wait=True
-
-)
- 
-# 4. 15 cm (150 mm) vorwärts
-
-drive_base.straight(150)
- 
-# 5. Aktor nochmals 15° nach rechts drehen (insgesamt 30°)
-
-medium_motor.run_target(
-
-    speed=200,
-
-    target_angle=30,  # Weil er schon bei 15° ist
-
-    then=Stop.HOLD,
-
-    wait=True
-
-)
-
- 
-
- 
+if farbe == 1:
+    print("Farbe erkannt: Schwarz")
+elif farbe == 2:
+    print("Farbe erkannt: Blau")
+elif farbe == 3:
+    print("Farbe erkannt: Grün")
+elif farbe == 4:
+    print("Farbe erkannt: Gelb")
+elif farbe == 5:
+    print("Farbe erkannt: Rot")
+elif farbe == 6:
+    print("Farbe erkannt: Weiß")
+elif farbe == 7:
+    print("Farbe erkannt: Braun")
+else:
+    print("Keine Farbe erkannt")
