@@ -9,6 +9,7 @@ ev3 = EV3Brick()
 # Begrüssung anzeigen und einen Ton abspielen
 ev3.screen.clear()                   # Bildschirm löschen
 ev3.screen.print("Hallo, EV3!")       # Text auf dem Display anzeigen
+ev3.screen.print("AMK legge eier")
 ev3.speaker.play_file(SoundFile.HELLO)        # Sounddatei "HELLO" abspielen
 
 # Warten, bis Mitte-Taste gedrückt wird
