@@ -1,22 +1,23 @@
-#!/usr/bin/env pybricks-micropython
-# Programm 2: Display-Ausgabe und Sound
-from pybricks.hubs import EV3Brick
-from pybricks.parameters import Button
-from pybricks.media.ev3dev import SoundFile   # enthält u. a. SoundFile.HELLO
-
-ev3 = EV3Brick()
-
-# Begrüssung anzeigen und einen Ton abspielen
-ev3.screen.clear()                   # Bildschirm löschen
-ev3.screen.print("Hallo, EV3!")       # Text auf dem Display anzeigen
-ev3.screen.print("AMK legge eier")
-ev3.speaker.play_file(SoundFile.HELLO)        # Sounddatei "HELLO" abspielen
-
-# Warten, bis Mitte-Taste gedrückt wird
-while Button.CENTER not in ev3.buttons.pressed():
-    pass
-
-# Rückmeldung
-ev3.screen.clear()
-ev3.screen.print("Taste erkannt!")
-ev3.speaker.beep()
+from ev3dev2.sensor.lego import ColorSensor
+from ev3dev2.sensor import INPUT_1
+ 
+sensor = ColorSensor(INPUT_1)
+ 
+farbe = sensor.color
+ 
+if farbe == 1:
+    print("Farbe erkannt: Schwarz")
+elif farbe == 2:
+    print("Farbe erkannt: Blau")
+elif farbe == 3:
+    print("Farbe erkannt: Grün")
+elif farbe == 4:
+    print("Farbe erkannt: Gelb")
+elif farbe == 5:
+    print("Farbe erkannt: Rot")
+elif farbe == 6:
+    print("Farbe erkannt: Weiß")
+elif farbe == 7:
+    print("Farbe erkannt: Braun")
+else:
+    print("Keine Farbe erkannt")
