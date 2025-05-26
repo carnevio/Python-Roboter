@@ -27,3 +27,50 @@ Ziel des Projekts ist es, einen autonomen Roboter zu bauen, der Objekte transpor
 
 Dieses Projekt steht unter der S-INA24bl Mathe Lizenz Gruppe.
 
+## Aufgabenverteilung
+🔧 Aufteilung in 5 Teilfeatures
+🔹 1. Navigation zur Ablagestelle (Startposition → Objekt)
+Zuständig für: Grundnavigation mit Gyro/Encoder oder Linienfolge
+
+Aufgabe: Der Roboter fährt selbstständig zur definierten Ablagestelle, wo sich das Objekt befindet.
+
+Technik: Linienfolger oder einfache Geradeausfahrt mit Zeit/Encoder + Drehung
+
+🔹 2. Farberkennung am Objekt
+Zuständig für: Farbsensor-Logik
+
+Aufgabe: Mit dem Farbsensor wird geprüft, ob das Objekt die gewünschte Farbe (z.B. Rot = „Paket“) hat.
+
+Technik: Wenn die Farbe stimmt, wird Signal gegeben → weiter zum Greifen; sonst evtl. Abbruch oder Suche nach anderem Objekt (optional)
+
+🔹 3. Greifmechanismus (Mittlerer Motor)
+Zuständig für: Objektaufnahme und -abgabe
+
+Aufgabe: Mittlerer Motor steuert Greifarm oder Hebegabel.
+
+Greifarm runter
+
+Objekt aufnehmen
+
+Greifarm hoch
+
+Technik: Exakte Winkelsteuerung des Motors
+
+🔹 4. Navigation zur Zielzone (Objekt → Zielort)
+Zuständig für: Navigation mit Referenz (z.B. Bodenfarbe, bestimmte Strecke, Linie)
+
+Aufgabe: Der Roboter fährt zur Zielzone, wo das Objekt abgeliefert werden soll.
+
+Technik: Linienfolger, Farberkennung der Zielzone oder koordinatenbasierte Navigation
+
+🔹 5. Objekt ablegen und zurückkehren
+Zuständig für: Abgabe durch Motorsteuerung + Rückfahrt
+
+Aufgabe:
+
+Objekt ablegen (Mittlerer Motor senken)
+
+ggf. Rückkehr zur Startposition oder bereit für nächsten Auftrag
+
+Technik: Wieder Mittlerer Motor steuern + einfache Navigation
+
