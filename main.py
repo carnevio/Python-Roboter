@@ -1,73 +1,78 @@
+#!/usr/bin/env pybricks-micropython
+
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor, ColorSensor
-from pybricks.parameters import Port, Color
+from pybricks.parameters import Port, Stop, Color
+from pybricks.robotics import DriveBase
 from pybricks.tools import wait
 
 # Initialisierung
 ev3 = EV3Brick()
+
+medium_motor = Motor(Port.A)  # Greifarm (Hebel)
 left_motor = Motor(Port.B)
 right_motor = Motor(Port.C)
-gripper_motor = Motor(Port.A)
-color_sensor = ColorSensor(Port.S1)
+color_sensor = ColorSensor(Port.S1)  # Farbsensor vorne
 
-# Farbkodierung
-OBJECT_COLOR = Color.RED       # Farbe des "Pakets"
-TARGET_ZONE_COLOR = Color.BLUE # Farbe des Zielbereichs
+# Reset der Motoren
+medium_motor.reset_angle(0)
+left_motor.reset_angle(0)
+right_motor.reset_angle(0)
 
-# Geschwindigkeiten
-SPEED = 100
+# DriveBase einrichten
+wheel_diameter = 56  # mm
+axle_track = 114     # mm
+drive_base = DriveBase(left_motor, right_motor, wheel_diameter, axle_track)
 
-# Greifarm-Funktionen
-def close_gripper():
-    gripper_motor.run_angle(200, -90)  # schließe den Greifarm
-    wait(500)
+# Gesuchte Farben definieren
+OBJECT_COLOR = Color.RED        # Objekt, das gegriffen werden soll
+TARGET_COLOR = Color.BLUE       # Zielzone
 
-def open_gripper():
-    gripper_motor.run_angle(200, 90)   # öffne den Greifarm
-    wait(500)
+# Startmeldung
+ev3.speaker.say("Suche Objekt")
 
-# Geradeaus fahren
-def drive_forward(duration_ms):
-    left_motor.run(SPEED)
-    right_motor.run(SPEED)
-    wait(duration_ms)
-    left_motor.stop()
-    right_motor.stop()
+# 1. Rückwärts fahren (z. B. zum Objekt hin)
+drive_base.straight(-100)
 
-# Navigation zur Zielzone (über Farbsensor)
-def navigate_to_target_zone():
-    left_motor.run(SPEED)
-    right_motor.run(SPEED)
+# 2. Leichte Drehung nach rechts
+drive_base.turn(20)
+
+# 3. Farbe prüfen
+if color_sensor.color() == OBJECT_COLOR:
+    ev3.speaker.say("Objekt erkannt")
+
+    # 4. Hebel (Greifarm) leicht nach unten – z. B. um Objekt zu greifen
+    medium_motor.run_target(
+        speed=200,
+        target_angle=-20,
+        then=Stop.HOLD,
+        wait=True
+    )
+
+    # 5. Vorwärts zur Zielzone
+    drive_base.straight(150)
+
+    # 6. Zielzone erkennen
+    ev3.speaker.say("Suche Zielzone")
     while True:
-        if color_sensor.color() == TARGET_ZONE_COLOR:
-            left_motor.stop()
-            right_motor.stop()
+        if color_sensor.color() == TARGET_COLOR:
+            drive_base.stop()
+            ev3.speaker.say("Zielzone erkannt")
             break
-        wait(10)
+        drive_base.straight(20)
+        wait(100)
 
-# Hauptprogramm
-def main():
-    ev3.speaker.say("Starte Transport")
+    # 7. Objekt ablegen (Greifarm nach oben)
+    medium_motor.run_target(
+        speed=200,
+        target_angle=30,  # z. B. wieder hoch
+        then=Stop.HOLD,
+        wait=True
+    )
 
-    open_gripper()
+    ev3.speaker.say("Transport abgeschlossen")
 
-    # Zur Ablagestelle fahren
-    drive_forward(2000)
+else:
+    ev3.speaker.say("Falsches Objekt")
+    drive_base.straight(100)  # Zurückfahren, wenn falsches Objekt
 
-    # Farbe des Objekts prüfen
-    obj_color = color_sensor.color()
-    if obj_color == OBJECT_COLOR:
-        ev3.speaker.say("Richtiges Objekt")
-        close_gripper()
-
-        # Zur Zielzone fahren
-        navigate_to_target_zone()
-
-        # Objekt ablegen
-        open_gripper()
-        ev3.speaker.say("Abgelegt")
-    else:
-        ev3.speaker.say("Falsches Objekt")
-        drive_forward(-1000)  # Rückwärts fahren, falls falsch
-
-main()
