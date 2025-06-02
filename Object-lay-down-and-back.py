@@ -40,7 +40,7 @@ def turn_180():
 
 # Hauptprogramm
 def main():
-    # 1. Vorwärts fahren und Distanz speichern
+    #Vorwärts fahren und Distanz speichern
     DISTANCE_DEGREES = 720 
     actual_distance = drive_forward(200, DISTANCE_DEGREES)
 
