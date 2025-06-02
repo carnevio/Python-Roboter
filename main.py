@@ -7,34 +7,67 @@ from pybricks.tools import wait
 ev3 = EV3Brick()
 left_motor = Motor(Port.B)
 right_motor = Motor(Port.C)
-sensor = ColorSensor(Port.S1)
+gripper_motor = Motor(Port.A)
+color_sensor = ColorSensor(Port.S1)
 
-# Zielzonenfarbe
-TARGET_COLOR = Color.BLUE
+# Farbkodierung
+OBJECT_COLOR = Color.RED       # Farbe des "Pakets"
+TARGET_ZONE_COLOR = Color.BLUE # Farbe des Zielbereichs
 
-# Geschwindigkeit
+# Geschwindigkeiten
 SPEED = 100
 
-# Linienfolger mit einfacher Farbregel
-def follow_line_to_color():
-    while True:
-        detected_color = sensor.color()
+# Greifarm-Funktionen
+def close_gripper():
+    gripper_motor.run_angle(200, -90)  # schließe den Greifarm
+    wait(500)
 
-        # Wenn Zielzonenfarbe erkannt → stoppen
-        if detected_color == TARGET_COLOR:
+def open_gripper():
+    gripper_motor.run_angle(200, 90)   # öffne den Greifarm
+    wait(500)
+
+# Geradeaus fahren
+def drive_forward(duration_ms):
+    left_motor.run(SPEED)
+    right_motor.run(SPEED)
+    wait(duration_ms)
+    left_motor.stop()
+    right_motor.stop()
+
+# Navigation zur Zielzone (über Farbsensor)
+def navigate_to_target_zone():
+    left_motor.run(SPEED)
+    right_motor.run(SPEED)
+    while True:
+        if color_sensor.color() == TARGET_ZONE_COLOR:
             left_motor.stop()
             right_motor.stop()
-            ev3.speaker.say("Ziel erreicht")
             break
-
-        # Linienfolger (sehr einfach)
-        if detected_color == Color.BLACK:
-            # Fahre geradeaus
-            left_motor.run(SPEED)
-            right_motor.run(SPEED)
-        else:
-            # Drehe leicht nach links, um Linie zu finden
-            left_motor.run(SPEED // 2)
-            right_motor.run(SPEED)
-
         wait(10)
+
+# Hauptprogramm
+def main():
+    ev3.speaker.say("Starte Transport")
+
+    open_gripper()
+
+    # Zur Ablagestelle fahren
+    drive_forward(2000)
+
+    # Farbe des Objekts prüfen
+    obj_color = color_sensor.color()
+    if obj_color == OBJECT_COLOR:
+        ev3.speaker.say("Richtiges Objekt")
+        close_gripper()
+
+        # Zur Zielzone fahren
+        navigate_to_target_zone()
+
+        # Objekt ablegen
+        open_gripper()
+        ev3.speaker.say("Abgelegt")
+    else:
+        ev3.speaker.say("Falsches Objekt")
+        drive_forward(-1000)  # Rückwärts fahren, falls falsch
+
+main()
