@@ -5,7 +5,7 @@ color_sensor = ColorSensor(Port.S1)
 
 def read_color(colorsensor: ColorSensor) -> str:
     # Get the detected color from the sensor
-    color = color_sensor.color()
+    # color = color_sensor.color()
 
     # Return the name of the color as a string
     if color == Color.RED:
