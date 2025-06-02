@@ -1,29 +1,40 @@
+from pybricks.hubs import EV3Brick
+from pybricks.ev3devices import Motor, ColorSensor
 from pybricks.parameters import Port, Color
-from pybricks.ev3devices import ColorSensor
-color_sensor = ColorSensor(Port.S1)
+from pybricks.tools import wait
 
+# Initialisierung
+ev3 = EV3Brick()
+left_motor = Motor(Port.B)
+right_motor = Motor(Port.C)
+sensor = ColorSensor(Port.S1)
 
-def read_color(colorsensor: ColorSensor) -> str:
-    # Get the detected color from the sensor
-    color = color_sensor.color()
+# Zielzonenfarbe
+TARGET_COLOR = Color.BLUE
 
-    # Return the name of the color as a string
-    if color == Color.RED:
-        return "red"
-    elif color == Color.GREEN:
-        return "green"
-    elif color == Color.BLUE:
-        return "blue"
-    elif color == Color.YELLOW:
-        return "yellow"
-    elif color == Color.WHITE:
-        return "white"
-    elif color == Color.BLACK:
-        return "black"
-    elif color == Color.BROWN:
-        return "brown"
-    else:
-        return "unknown"
+# Geschwindigkeit
+SPEED = 100
 
-if read_color(color_sensor) == 'red':
-    print('the red color has been detected')
+# Linienfolger mit einfacher Farbregel
+def follow_line_to_color():
+    while True:
+        detected_color = sensor.color()
+
+        # Wenn Zielzonenfarbe erkannt → stoppen
+        if detected_color == TARGET_COLOR:
+            left_motor.stop()
+            right_motor.stop()
+            ev3.speaker.say("Ziel erreicht")
+            break
+
+        # Linienfolger (sehr einfach)
+        if detected_color == Color.BLACK:
+            # Fahre geradeaus
+            left_motor.run(SPEED)
+            right_motor.run(SPEED)
+        else:
+            # Drehe leicht nach links, um Linie zu finden
+            left_motor.run(SPEED // 2)
+            right_motor.run(SPEED)
+
+        wait(10)

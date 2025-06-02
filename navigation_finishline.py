@@ -1,20 +1,40 @@
 from pybricks.hubs import EV3Brick
-from pybricks.parameters import Button
-from pybricks.ev3devices import Motor
-from pybricks.parameters import Port, Stop
-from pybricks.robotics import DriveBase
+from pybricks.ev3devices import Motor, ColorSensor
+from pybricks.parameters import Port, Color
+from pybricks.tools import wait
 
+# Initialisierung
 ev3 = EV3Brick()
-
-medium_motor = Motor(Port.A)
 left_motor = Motor(Port.B)
 right_motor = Motor(Port.C)
+sensor = ColorSensor(Port.S1)
 
-medium_motor.reset_angle(0)
-left_motor.reset_angle(0)
-right_motor.reset_angle(0)
+# Zielzonenfarbe
+TARGET_COLOR = Color.BLUE
 
-heel_diameter = 56  
-axle_track = 114     
-drive_base = DriveBase(left_motor, right_motor,
-                       wheel_diameter, axle_track)
+# Geschwindigkeit
+SPEED = 100
+
+# Linienfolger mit einfacher Farbregel
+def follow_line_to_color():
+    while True:
+        detected_color = sensor.color()
+
+        # Wenn Zielzonenfarbe erkannt → stoppen
+        if detected_color == TARGET_COLOR:
+            left_motor.stop()
+            right_motor.stop()
+            ev3.speaker.say("Ziel erreicht")
+            break
+
+        # Linienfolger (sehr einfach)
+        if detected_color == Color.BLACK:
+            # Fahre geradeaus
+            left_motor.run(SPEED)
+            right_motor.run(SPEED)
+        else:
+            # Drehe leicht nach links, um Linie zu finden
+            left_motor.run(SPEED // 2)
+            right_motor.run(SPEED)
+
+        wait(10)
