@@ -18,23 +18,23 @@ color_sensor = ColorSensor(Port.S4)
 medium_motor.reset_angle(0)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
-
+# Lukas
 wheel_diameter = 56  
 axle_track = 114     
 drive_base = DriveBase(left_motor, right_motor, wheel_diameter, axle_track)
 
+
 OBJECT_COLOR = Color.GREEN
 TARGET_COLOR = Color.BLUE
 
-# Lukas
 ev3.speaker.say("Suche Objekt")
 drive_base.straight(-100)
 drive_base.turn(20)
-
+ # Sven
 if color_sensor.color() == OBJECT_COLOR:
 
     ev3.speaker.say("Objekt erkannt")
-        # Sven
+       
 
     medium_motor.run_target(
         speed=200,
@@ -42,6 +42,8 @@ if color_sensor.color() == OBJECT_COLOR:
         then=Stop.HOLD,
         wait=True
     )
+
+     # Raffi
     drive_base.straight(100)
     medium_motor.run_target(
         speed=200,
@@ -50,9 +52,10 @@ if color_sensor.color() == OBJECT_COLOR:
         wait=True
     )
 
-    # Raffi
+   
     ev3.speaker.say("Suche Zielzone")
     while True:
+        # Nevio
         if color_sensor.color() == TARGET_COLOR:
             drive_base.stop()
             ev3.speaker.say("Zielzone erkannt")
@@ -60,7 +63,7 @@ if color_sensor.color() == OBJECT_COLOR:
         drive_base.straight(20)
         wait(100)
 
-    # Nevio
+    
     medium_motor.run_target(
         speed=200,
         target_angle=60,
