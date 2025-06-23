@@ -43,7 +43,7 @@ if color_sensor.color() == OBJECT_COLOR:
         wait=True
     )
 
-     # Raffi
+     # Nevio
     drive_base.straight(100)
     medium_motor.run_target(
         speed=200,
@@ -55,7 +55,6 @@ if color_sensor.color() == OBJECT_COLOR:
    
     ev3.speaker.say("Suche Zielzone")
     while True:
-        # Nevio
         if color_sensor.color() == TARGET_COLOR:
             drive_base.stop()
             ev3.speaker.say("Zielzone erkannt")
@@ -73,6 +72,6 @@ if color_sensor.color() == OBJECT_COLOR:
     ev3.speaker.say("Transport finished")
 
 else:
-    # Nevio
+
     ev3.speaker.say("Falsches Objekt")
     drive_base.straight(100)
